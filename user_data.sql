@@ -1,0 +1,6 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "Cart_9000" (
+	"item_id"	INTEGER,
+	"item_quant"	INTEGER
+);
+COMMIT;
