@@ -17,7 +17,7 @@
             // $("#addr").value = 
         })
     </script>
-    <title>Order History</title>
+    <title>Reservation History</title>
 </head>
 <body>
     <?php 
@@ -76,25 +76,27 @@
             <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>Item Name</th>
-                    <th>Item Price</th>
-                    <th>Item Quantity</th>
-                    <th>Total Price</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone No</th>
+                    <th>Reservation Date</th>
+                    <th>Reservation Time</th>
+                    <th>Table Number</th>
                   </tr>
                 </thead>
                 <tbody>
                     <?php
-                        $res = $db->getUserOrders($uid);
+                        $res = $db->getUserReservations($uid);
                         while ($row = $res->fetchArray(SQLITE3_ASSOC)) {
-                            $menu = $db->getMenuItem($row['item_id']);
-                            $menu_row = $menu->fetchArray(SQLITE3_ASSOC)
                     ?>
 
                     <tr>
-                        <td><?php echo $menu_row['item_nm'] ?></td>
-                        <td><?php echo $menu_row['item_price'] ?></td>
-                        <td><?php echo $row['item_quant'] ?></td>
-                        <td><?php echo $row['item_quant']*$menu_row['item_price'] ?></td>
+                        <td><?php echo $row['name'] ?></td>
+                        <td><?php echo $row['email'] ?></td>
+                        <td><?php echo $row['phno'] ?></td>
+                        <td><?php echo $row['date'] ?></td>
+                        <td><?php echo $row['time'] ?></td>
+                        <td><?php echo $row['table_num'] ?></td>
                     </tr>
 
                     <?php

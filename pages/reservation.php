@@ -17,17 +17,17 @@
             // $("#addr").value = 
         })
     </script>
-    <title>Confirm Order</title>
+    <title>Table Reservation</title>
 </head>
 <body>
     <?php 
         include "../data.php";
         $uid = $_SESSION['uid'];
 
-        if (empty($_SESSION)) {
-            // header("Location: /ResApp/pages/");
-            header("Location: /pages/");
-        } 
+        // if (empty($_SESSION) || empty($_POST)) {
+        //     // header("Location: /ResApp/pages/");
+        //     header("Location: /pages/");
+        // } 
 
         $db = new DataDB("../data.db");
         $user_details = $db->getUserFromId($uid);
@@ -71,65 +71,11 @@
     </header>
 
     <main class="Confirm-Order">
+        
         <div class="Order-Section">
-            <h1 >ORDERS</h1>
-            <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Item Name</th>
-                    <th>Item Price</th>
-                    <th>Item Quantity</th>
-                    <th>Total Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        include "../user_data.php";
-                        $user_db = new UserDataDB("../user_data.db");
-                        $res = $user_db->getCart($uid);
-                        // if (empty($res->fetchArray(SQLITE3_ASSOC))) {
-                        //     header("Location: /pages/");
-                        // }
-                        while ($row = $res->fetchArray(SQLITE3_ASSOC)) {
-                            $menu = $db->getMenuItem($row['item_id']);
-                            $menu_row = $menu->fetchArray(SQLITE3_ASSOC);
-                            if (!$menu) {
-                                header("Location: /pages/");
-                            }
-                    ?>
-
-                    <tr>
-                        <td><?php echo $menu_row['item_nm'] ?></td>
-                        <td><?php echo $menu_row['item_price'] ?></td>
-                        <td><?php echo $row['item_quant'] ?></td>
-                        <td><?php echo $row['item_quant']*$menu_row['item_price'] ?></td>
-                    </tr>
-
-                    <?php
-                        }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-        <div class="Order-Section">
-            <h1 >DELIVERY DETAILS</h1>
-            <form action="/validate_order_from_cart.php" method="post">
-
-                <?php
-                    $i = 0;
-                    $res = $user_db->getCart($uid);
-                    while ($row = $res->fetchArray(SQLITE3_ASSOC)) {
-                ?>
-
-                <input type="number" value="<?php echo $row['item_id'] ?>" id="item_id" name="item_id_<?php echo $i ?>" style="display: none;" required>
-                <input type="number" value="<?php echo $row['item_quant'] ?>" id="item_quant" name="item_quant_<?php echo $i ?>" style="display: none;" required>
-
-                <?php
-                        $i++;
-                    }
-                ?>
-
-                <input type="number" value="<?php echo $i ?>" id="item_count" name="item_count" style="display: none;" required>
+            <h1 >BOOK A TABLE</h1>
+            <form action="/make_reservation.php" method="post" id="book-table">
+                
                 <div class="form-floating mt-3 mb-3" >
                     <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="<?php echo $user_details['user_nm'] ?>">
                     <label for="name">Name</label>
@@ -144,20 +90,58 @@
                     <input type="text" class="form-control" id="phno" placeholder="Phone Number" name="phno" value="<?php echo $user_details['user_phno'] ?>">
                     <label for="phno">Phone Number</label>
                 </div>
-
-                <div class="form-floating mt-3 mb-3">
-                    <textarea type="text" class="form-control" id="addr" placeholder="Address" name="addr" maxlength="150" style="max-height: 300px;"><?php echo $user_details['addr'] ?>
-                    </textarea>
-                    <label for="addr">Address</label>
-                </div>
-                <button type="submit" class="btn btn-primary rounded-pill" style="width:130px"
-                    <?php 
-                        if (empty($res->fetchArray(SQLITE3_ASSOC))) {
-                            echo 'disabled';
-                        }
-                    ?>
-                >Place Order</button>
+                <!-- <button type="submit" class="btn btn-primary rounded-pill" style="width:130px">Place Order</button> -->
             </form>
+            <form action="/pages/reservation.php" method="post" class="Reservation-Form">
+                <!-- <div class="mb-3 mt-3">
+                    <label for="date" class="form-label">Date :</label>
+                    <input type="date" class="form-control" id="date" name="date">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="time" class="form-label">Time :</label>
+                    <input type="time" class="form-control" id="time" name="time">
+                </div> -->
+                <div>
+                <label for="date" class="form-label">Date :</label>
+                <input type="date"  id="date" name="date" required value="<?php echo $_POST['date'] ?>">
+                </div>
+                <div>
+                <label for="time" class="form-label">Time :</label>
+                <input type="time"  id="time" name="time" required value="<?php echo $_POST['time'] ?>">
+                </div>
+                <button type="submit" class="btn btn-primary rounded-pill" style="width:130px">View Tables</button>
+            </form>
+            
+            <?php
+                // if (date('Y-m-d', strtotime($_POST['date'])) <= date('Y-m-d'))
+                if (!empty($_POST)) {
+            ?>
+                <h3>Available Tables</h3>
+                <div class="Table-Available">
+                    <input type="date" value="<?php echo $_POST['date'] ?>" form="book-table" id="res_date" name="res_date" style="display: none;">
+                    <input type="time" value="<?php echo $_POST['time'] ?>" form="book-table" id="res_time" name="res_time" style="display: none;">
+                    <?php
+                    // Check whether the date and time has already passed or not
+                    // echo $_POST['date'];
+                    // echo date("H:i", strtotime($_POST['time']));
+                    $tables = $db->displayTables($_POST['date'], date("H:i", strtotime($_POST['time'])));
+                    for ($i = 0; $i < 20; $i++) {
+                        if ($tables[$i] && !empty($_SESSION)) {
+                            ?>
+                            <button type="submit" class="btn btn-success" name="table_num" form="book-table" value="<?php echo ($i+1) ?>"><?php echo ($i+1) ?></button>
+                            <?php
+                        }
+                        if ($tables[$i] && empty($_SESSION)) {
+                            ?>
+                            <button type="submit" class="btn btn-success" form="book-table" value="<?php echo ($i+1) ?>" disabled><?php echo ($i+1) ?></button>
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
+            <?php
+                }
+            ?>
         </div>
     </main>
 

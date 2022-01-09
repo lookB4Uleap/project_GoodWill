@@ -110,6 +110,45 @@
             	return 1;
         }
 
+        function createReservation($uid, $date, $time, $table, $name, $email, $phno) {
+            // $new_date = date('Y-m-d');
+            // $new_time = date('H:i');
+            $res_time = date('Y-m-d H:i:s');
+            $ret = $this->exec("INSERT INTO reservations(res_time ,date, time, table_num, uid, name, email, phno) VALUES ('{$res_time}', '{$date}', '{$time}', {$table}, {$uid}, '{$name}', '{$email}', '{$phno}')");
+            if (!$ret)
+                return $this->lastErrorMsg();
+            else
+            	return 1;
+        }
+
+        function displayTables($date, $time) {
+            $ret = $this->query("SELECT * FROM reservations WHERE date = '{$date}'");
+            // $res = array();
+            // echo $time."<br />";
+
+            $is_table_available = array();
+            for ($i = 1; $i <= 20; $i++) {
+                $is_table_available[$i-1] = TRUE;
+            }
+
+            while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+                $lower = strtotime($row['time']) - 2*60*60;
+                $upper = strtotime($row['time']) + 2*60*60;
+                // echo date("h:i", $lower)." ".date("h:i", $upper)."<br />";
+                // echo ."<br />"; 
+                if ($time > date("h:i", $lower) && $time < date("h:i", $upper))
+                // array_push($res, $row);
+                $is_table_available[$row['table_num']-1] = FALSE;
+            }
+            // return json_encode($is_table_available);
+            return $is_table_available;
+        }
+
+        function getUserReservations($uid) {
+            $ret = $this->query("SELECT * FROM reservations WHERE uid = {$uid}");
+            return $ret;
+        }
+
         function __destruct() {
             $this->close();
         }
@@ -162,5 +201,8 @@
    //    echo "<p>Operation done successfully</p>";
    // }
    // $db->close();
+
+//    echo $db->createReservation(9000, "", "", 20, "A", "E", "P");
+//    echo $db->displayTables("2022-01-06", date("h:i", mktime(11,14)));
 ?>
 

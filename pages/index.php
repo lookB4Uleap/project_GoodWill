@@ -85,20 +85,17 @@
     <header class="Header">
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
-              <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+              <a class="navbar-brand" href="/pages/">GoodWill</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="mynavbar">
                 <ul class="navbar-nav me-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">Link</a>
+                    <a class="nav-link" href="/pages/">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">Link</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">Link</a>
+                    <a class="nav-link" href="/pages/reservation.php">Table Reservation</a>
                   </li>
                 </ul>
                 <?php if (!empty($_SESSION)) { ?>
@@ -108,6 +105,7 @@
                 <ul class="dropdown-menu dropdown-menu-end" style="background-color: #f1f1f1;">
                   <li><a class="dropdown-item" href="/pages/cart.php">Cart</a></li>
                   <li><a class="dropdown-item" href="/pages/order-history.php">Order History</a></li>
+                  <li><a class="dropdown-item" href="/pages/reservation-history.php">Reservations History</a></li>
                   <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
                 </ul>
                 <?php } ?>

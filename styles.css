@@ -202,7 +202,31 @@ body, html {
     flex-direction: column;
 }
 
-@media only screen and (max-width: 800px) {
+.Reservation-Form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Reservation-Form input {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.Table-Available {
+    display: flex;
+    width: 60%;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.Table-Available button {
+    width: 40px;
+    margin: 2px;
+}
+
+@media only screen and (max-width: 900px) {
     .Menu {
         justify-content: center;
     }
@@ -223,5 +247,13 @@ body, html {
     .Order-Section {
         width: 100%;
         padding: 10px;
+    }
+
+    .Reservation-Form {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-evenly;
+        width: unset;
+        height: 20vh;
     }
 }
