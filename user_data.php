@@ -7,7 +7,7 @@
 
         function createUserCart($uid) {
             $ret = $this->exec("CREATE TABLE Cart_".$uid." (item_id INTEGER, item_quant INTEGER)");
-            if (!ret)
+            if (!$ret)
                 return $this->lastErrorMsg();
             else
                 return 1;       
@@ -28,7 +28,7 @@
 
         function deleteCartHistory($uid) {
             $ret = $this->exec("DELETE FROM Cart_".$uid);
-            if (!ret)
+            if (!$ret)
                 return $this->lastErrorMsg();
             else
                 return 1;
