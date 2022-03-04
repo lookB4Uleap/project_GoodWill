@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <script>
         $(document).ready(() => {
-            console.log($("#hidden").val())
-
+            // console.log($("#hidden").val())
+            $("#year").text((new Date()).getFullYear())
             // $("#addr").value = 
         })
     </script>
@@ -38,33 +38,37 @@
         // echo $_POST['item_quant']; 
     ?>
     <header class="Header">
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
-              <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+              <a class="navbar-brand" href="/pages/">GoodWill</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="mynavbar">
                 <ul class="navbar-nav me-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">Link</a>
+                    <a class="nav-link" href="/pages/">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">Link</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">Link</a>
+                    <a class="nav-link" href="/pages/reservation.php">Table Reservation</a>
                   </li>
                 </ul>
+                <?php if (!empty($_SESSION)) { ?>
                 <a class="Drop-Down d-flex dropdown-toggle" href="#" style="text-decoration: none; color: #f1f1f1;" data-bs-toggle="dropdown">
-                    <!-- <img src="logo.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill">  -->
                     <i class="fas fa-user-circle" style="font-size: 30px;"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" style="background-color: #f1f1f1;">
-                  <li><a class="dropdown-item" href="#">Link 1</a></li>
-                  <li><a class="dropdown-item" href="#">Link 2</a></li>
-                  <li><a class="dropdown-item" href="#">Link 3</a></li>
+                  <li><a class="dropdown-item" href="/pages/cart.php">Cart</a></li>
+                  <li><a class="dropdown-item" href="/pages/order-history.php">Order History</a></li>
+                  <li><a class="dropdown-item" href="/pages/reservation-history.php">Reservations History</a></li>
+                  <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
                 </ul>
+                <?php } ?>
+                <?php if (empty($_SESSION)) { ?>
+                <div class="d-flex nav-item">
+                    <button type="button" class="btn btn-primary rounded-pill" style="width:130px; height:35px" id="login-button">Login</button>
+                </div>
+                <?php } ?>
               </div>
             </div>
           </nav>
@@ -72,7 +76,7 @@
 
     <main class="Confirm-Order">
         <div class="Order-Section">
-            <h1 >ORDER HISTORY</h1>
+            <h1 >RESERVATION HISTORY</h1>
             <table class="table table-striped">
                 <thead>
                   <tr>

@@ -217,7 +217,8 @@ body, html {
 .Table-Available {
     display: flex;
     width: 60%;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
 }
 
