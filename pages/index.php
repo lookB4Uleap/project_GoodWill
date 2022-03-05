@@ -133,7 +133,7 @@
             ?>
             <div class="Card-Container">
             <h3><?php echo $menu_row['item_nm'] ?></h3>
-            <img src="https://picsum.photos/200" alt="Avatar" style="width:100%">
+            <img src="http://via.placeholder.com/100x100" alt="Avatar" style="width:100%">
             <div class="Button-Container" id= "<?php echo $menu_row['id'] ?>" >
                 <form action="/pages/confirm-order.php" method="POST" style="display: None" id="<?php echo "Buy".$menu_row['id'] ?>">
                     <input type="number" id="item_id" name="item_id" value="<?php echo $menu_row['id'] ?>">

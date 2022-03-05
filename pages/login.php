@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <style>
         body {
-            background-image: url("https://loremflickr.com/1080/1080/food");
+            background-image: url("https://picsum.photos/640/360");
             background-size: cover;
         }
     </style>

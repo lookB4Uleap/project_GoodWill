@@ -17,7 +17,7 @@
             // $("#addr").value = 
         })
     </script>
-    <title>Confirm Order</title>
+    <title>Cart</title>
 </head>
 <body>
     <?php 
@@ -76,7 +76,7 @@
 
     <main class="Confirm-Order">
         <div class="Order-Section">
-            <h1 >ORDERS</h1>
+            <h1 >CART</h1>
             <table class="table table-striped">
                 <thead>
                   <tr>
